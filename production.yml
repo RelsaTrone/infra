@@ -1,8 +1,5 @@
 ---
-- name: Конфигурация окружения PRODUCTION
-  hosts: lf-app1
-  gather_facts: true
-
+- hosts: db
   roles:
-    - hostname
-
+    - { role: 'common' }
+    - { role: 'hostname'}
