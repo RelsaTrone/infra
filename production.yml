@@ -1,5 +1,9 @@
 ---
-- hosts: db
+- name: Конфигурация окружения PRODUCTION
+  hosts: db
+  vars:
+    common_timezone: "Europe/London"
+    common_swapfile_path: "/mnt/custom_swap"
   roles:
+    #- { role: 'common' }
     - { role: 'common' }
-    - { role: 'hostname'}
