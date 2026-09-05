@@ -5,5 +5,5 @@
     timezone: "Europe/London"
     swapfile: "/mnt/custom_swap"
   roles:
-    #- { role: 'common' }
     - { role: 'common' }
+    - { role: 'docker' }

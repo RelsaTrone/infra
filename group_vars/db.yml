@@ -1,3 +1,10 @@
 ---
+docker_users:
+  - rus
+
+packages:
+  - mc
+  - htop
+  - rsync
 
 swap_size: 1G
