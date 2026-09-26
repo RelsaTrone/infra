@@ -1,6 +1,6 @@
 ---
 - name: Конфигурация окружения PRODUCTION
-  hosts: db
+  hosts: prod_db
   vars:
     timezone: "Europe/London"
     swapfile: "/mnt/custom_swap"
