@@ -1,3 +1,10 @@
 ---
 swapfile: "/mnt/custom_swap"
+packages:
+  - git
+  - zip
+  - htop
 
+docker_users:
+  - rus
+swap_size: "1G"
