@@ -1,5 +1,6 @@
 ---
-- hosts: web
+- name: Конфигурация окружения STAGE
+  hosts: stage_web
   roles:
     - { role: 'common' }
     - { role: 'docker' }
