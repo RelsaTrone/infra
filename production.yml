@@ -7,3 +7,42 @@
   roles:
     - { role: 'common' }
     - { role: 'docker' }
+
+  tasks:
+    - name: get swap path
+      shell: swapon --show
+      register: swap_path
+
+    - name: print swap path
+      debug:
+        msg: "{{ swap_path.stdout }}"
+
+    - name: Print load average
+      debug:
+        msg: "load average: {{ ansible_loadavg['1m'] }}, {{ ansible_loadavg['5m'] }}, {{ ansible_loadavg['15m'] }}"
+    - name: Get swap info
+      shell: swapon --show --noheadings --raw
+      register: swap_info
+      changed_when: false
+
+    - name: Set swap_file fact
+      set_fact:
+        swap_file_path: "{{ swap_info.stdout.split()[0] }}"
+      when: swap_info.stdout | length > 0
+    - name: Check if swap file exists
+      ansible.builtin.stat:
+        path: "{{ swap_file_path }}"
+      register: swap_file_check
+      when: swap_file_path is defined
+    - name: Create swap file if missing
+      ansible.builtin.command:
+        cmd: "truncate -s {{ swap_size }} {{ swap_file_path }}"
+        creates: "{{ swap_file_path }}"
+      when:
+        - swap_file_path is defined
+        - not swap_file_check.stat.exists
+      become: true
+    - name: Print swap file path
+      debug:
+        msg: "Swap file: {{ swap_file_path }}"
+      when: swap_file_path is defined
