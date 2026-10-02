@@ -1,6 +1,9 @@
 ---
 - name: Конфигурация окружения STAGE
   hosts: stage_web
+  vars:
+    nginx_worker_connections: 512
   roles:
     - { role: 'common' }
     - { role: 'docker' }
+    - { role: 'nginx' }

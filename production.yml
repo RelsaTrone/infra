@@ -4,9 +4,11 @@
   vars:
     timezone: "Europe/London"
     swapfile: "/mnt/custom_swap"
+    nginx_worker_connections: 1024
   roles:
     - { role: 'common' }
     - { role: 'docker' }
+    - { role: 'nginx' }
 
   tasks:
     - name: get swap path
