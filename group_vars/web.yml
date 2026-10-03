@@ -1,9 +1,4 @@
-packages:
-  - git
-  - zip
-  - htop
-
-docker_users:
-  - rus
-swap_size: "1G"
-docker_compose_version: "1.29.2"
+---
+web_url: "bashdays.ru"
+web_port: 5000
+timezone: "Europe/Moscow"
