@@ -1,0 +1,127 @@
+[WARNING]: While constructing a mapping from
+/home/rus/infra/roles/vault/tasks/main.yml, line 11, column 5, found a
+duplicate dict key (backup). Using last defined value only.
+[DEPRECATION WARNING]: community.docker.docker_compose has been deprecated. 
+This module uses docker-compose v1, which is End of Life since July 2022. 
+Please migrate to community.docker.docker_compose_v2. This feature will be 
+removed from community.docker in version 4.0.0. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+
+PLAY [Конфигурация окружения PRODUCTION] ***************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [lf-app1]
+
+TASK [common : Динамически изменить имя хоста] *********************************
+ok: [lf-app1]
+
+TASK [common : Установить часовой пояс] ****************************************
+ok: [lf-app1]
+
+TASK [common : Create swap file] ***********************************************
+ok: [lf-app1]
+
+TASK [common : Install additional packages] ************************************
+ok: [lf-app1] => (item=git)
+ok: [lf-app1] => (item=zip)
+ok: [lf-app1] => (item=htop)
+
+TASK [common : Установить права на swap-файл] **********************************
+ok: [lf-app1]
+
+TASK [common : Инициализировать swap] ******************************************
+skipping: [lf-app1]
+
+TASK [common : Включить swap] **************************************************
+skipping: [lf-app1]
+
+TASK [common : Добавить swap в fstab] ******************************************
+ok: [lf-app1]
+
+TASK [docker : Install Docker and Docker Compose] ******************************
+ok: [lf-app1] => (item=docker.io)
+
+TASK [docker : Ensure Docker service is enabled and started] *******************
+ok: [lf-app1]
+
+TASK [docker : Ensure docker group exists] *************************************
+ok: [lf-app1]
+
+TASK [docker : Add users to docker group] **************************************
+ok: [lf-app1] => (item=rus)
+
+TASK [docker : Ensure python3-pip is installed] ********************************
+ok: [lf-app1]
+
+TASK [docker : Install docker-compose via pip] *********************************
+ok: [lf-app1]
+
+TASK [nginx : Install nginx package on RedHat] *********************************
+skipping: [lf-app1]
+
+TASK [nginx : Install nginx package on Debian systems] *************************
+ok: [lf-app1]
+
+TASK [nginx : Ensure nginx is enabled and running] *****************************
+ok: [lf-app1]
+
+TASK [nginx : Disable default site if required] ********************************
+ok: [lf-app1]
+
+TASK [nginx : Deploy vault configuration file] *********************************
+ok: [lf-app1]
+
+TASK [nginx : Deploy nginx configuration file] *********************************
+ok: [lf-app1]
+
+TASK [nginx : Ensure python3-passlib is installed] *****************************
+ok: [lf-app1]
+
+TASK [nginx : Add or update users in htpasswd] *********************************
+ok: [lf-app1] => (item={'name': 'linuxfactory', 'password': 'superpassword'})
+
+TASK [test_vault : create .my.cnf] *********************************************
+ok: [lf-app1]
+
+TASK [vault : Ensure Vault data directory exists] ******************************
+ok: [lf-app1]
+
+TASK [vault : Deploy docker-compose.yml for Vault] *****************************
+ok: [lf-app1]
+
+TASK [vault : Start Vault container] *******************************************
+changed: [lf-app1]
+
+TASK [get swap path] ***********************************************************
+ok: [lf-app1]
+
+TASK [print swap path] *********************************************************
+ok: [lf-app1] => {
+    "msg": "NAME             TYPE  SIZE   USED PRIO\n/mnt/custom_swap file 1024M 109.9M   -2"
+}
+
+TASK [Print load average] ******************************************************
+ok: [lf-app1] => {
+    "msg": "load average: 0.17578125, 0.27099609375, 0.15966796875"
+}
+
+TASK [Get swap info] ***********************************************************
+ok: [lf-app1]
+
+TASK [Set swap_file fact] ******************************************************
+ok: [lf-app1]
+
+TASK [Check if swap file exists] ***********************************************
+ok: [lf-app1]
+
+TASK [Create swap file if missing] *********************************************
+skipping: [lf-app1]
+
+TASK [Print swap file path] ****************************************************
+ok: [lf-app1] => {
+    "msg": "Swap file: /mnt/custom_swap"
+}
+
+PLAY RECAP *********************************************************************
+lf-app1                    : ok=31   changed=1    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0   
+
